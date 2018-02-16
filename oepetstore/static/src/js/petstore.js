@@ -21,6 +21,7 @@ odoo.define('oepetstore.petstore', function (require) {
         }
     });
 
+    // instead instance.web.client_actions.add('petstore.homepage', 'instance.oepetstore.HomePage');
     core.action_registry.add('petstore.homepage', homePage);
 
     var MessageOfTheDay = Widget.extend({
