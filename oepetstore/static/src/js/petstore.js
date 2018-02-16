@@ -4,41 +4,22 @@ odoo.define('oepetstore.petstore', function (require) {
     var Widget = require('web.Widget');
     var core = require('web.core');
     var utils = require('web.utils');
+    var Model = require('web.Model');
+    var data = require('web.data');
     var QWeb = core.qweb;
     var _t = core._t;
     var _lt = core._lt;
 
 
-    var ColorInputWidget = Widget.extend({
-        template: "ColorInputWidget",
-        events: {
-            'change input': 'input_changed'
-        },
-        start: function() {
-            this.input_changed();
-            return this._super();
-        },
-        input_changed: function() {
-            var color = [
-                "#",
-                this.$(".oe_color_red").val(),
-                this.$(".oe_color_green").val(),
-                this.$(".oe_color_blue").val()
-            ].join('');
-            this.set("color", color);
-        },
-    });
-
     var homePage = Widget.extend({
-        template: "HomePage",
         start: function() {
-            this.colorInput = new ColorInputWidget(this);
-            this.colorInput.on("change:color", this, this.color_changed);
-            return this.colorInput.appendTo(this.$el);
-        },
-        color_changed: function() {
-            this.$(".oe_color_div").css("background-color", this.colorInput.get("color"));
-        },
+        var self = this;
+        var model = new Model("oepetstore.message_of_the_day");
+        model.call("my_method", {context: new data.CompoundContext()}).then(function(result) {
+            self.$el.append("<div>Hello " + result["hello"] + "</div>");
+            // will show "Hello world" to the user
+        });
+    },
 });
 
 core.action_registry.add('petstore.homepage', homePage);
