@@ -12,16 +12,26 @@ odoo.define('oepetstore.petstore', function (require) {
 
 
     var homePage = Widget.extend({
+        template: "HomePage",
         start: function() {
-        var self = this;
-        var model = new Model("oepetstore.message_of_the_day");
-        model.call("my_method", {context: new data.CompoundContext()}).then(function(result) {
-            self.$el.append("<div>Hello " + result["hello"] + "</div>");
-            // will show "Hello world" to the user
-        });
-    },
-});
+            return new MessageOfTheDay(this).appendTo(this.$el);
+        },
+    });
 
-core.action_registry.add('petstore.homepage', homePage);
+    core.action_registry.add('petstore.homepage', homePage);
+
+    var MessageOfTheDay = Widget.extend({
+        template: "MessageOfTheDay",
+        start: function() {
+            var self = this;
+            return new Model("oepetstore.message_of_the_day")
+                .query(["message"])
+                .order_by('-create_date', '-id')
+                .first()
+                .then(function(result) {
+                    self.$(".oe_mywidget_message_of_the_day").text(result.message);
+                });
+        },
+    });
 
 });
