@@ -38,6 +38,9 @@ odoo.define('oepetstore.petstore', function (require) {
     });
     var PetToysList = Widget.extend({
         template: 'PetToysList',
+        events: {
+            'click .oe_petstore_pettoy': 'selected_item',
+        },
         start: function () {
             var self = this;
             return new Model('product.product')
@@ -50,6 +53,14 @@ odoo.define('oepetstore.petstore', function (require) {
                         self.$el.append(QWeb.render('PetToy', {item: item}));
                     });
                 });
-        }
+        },
+        selected_item: function (event) {
+            this.do_action({
+                type: 'ir.actions.act_window',
+                res_model: 'product.product',
+                res_id: $(event.currentTarget).data('id'),
+                views: [[false, 'form']],
+            });
+        },
     });
 });
