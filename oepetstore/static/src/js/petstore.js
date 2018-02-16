@@ -14,8 +14,11 @@ odoo.define('oepetstore.petstore', function (require) {
     var homePage = Widget.extend({
         template: "HomePage",
         start: function() {
-            return new MessageOfTheDay(this).appendTo(this.$el);
-        },
+            return $.when(
+                new PetToysList(this).appendTo(this.$('.oe_petstore_homepage_left')),
+                new MessageOfTheDay(this).appendTo(this.$('.oe_petstore_homepage_right'))
+            );
+        }
     });
 
     core.action_registry.add('petstore.homepage', homePage);
@@ -33,5 +36,20 @@ odoo.define('oepetstore.petstore', function (require) {
                 });
         },
     });
-
+    var PetToysList = Widget.extend({
+        template: 'PetToysList',
+        start: function () {
+            var self = this;
+            return new Model('product.product')
+                .query(['name', 'image'])
+                .filter([['categ_id.name', '=', "Pet Toys"]])
+                .limit(5)
+                .all()
+                .then(function (results) {
+                    _(results).each(function (item) {
+                        self.$el.append(QWeb.render('PetToy', {item: item}));
+                    });
+                });
+        }
+    });
 });
