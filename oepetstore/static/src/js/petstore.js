@@ -9,6 +9,7 @@ odoo.define('oepetstore.petstore', function (require) {
     var _lt = core._lt;
 
     var homePage = Widget.extend({
+        template: "HomePageTemplate",
         className: 'oe_petstore_homepage',
         init: function(parent) {
             this._super(parent);
@@ -17,7 +18,6 @@ odoo.define('oepetstore.petstore', function (require) {
         start: function() {
             console.log("Your pet store home page loaded");
             this.$el.append("<div>Hello dear Odoo user!</div>");
-            this.$el.append(QWeb.render("HomePageTemplate"));
             var greeting = new GreetingsWidget(this);
             greeting.appendTo(this.$el);
             console.log(this.getChildren()[0].$el);
