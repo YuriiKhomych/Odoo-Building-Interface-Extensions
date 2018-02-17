@@ -33,4 +33,9 @@
       <input type="color" />
     </div>
   </t>
+  <t t-name="WidgetCoordinates">
+    <iframe width="400" height="300"
+        t-attf-src="https://maps.google.com/?ie=UTF8&amp;ll={{latitude}},{{longitude}}&amp;output=embed">
+    </iframe>
+  </t>
 </templates>

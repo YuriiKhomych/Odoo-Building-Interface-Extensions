@@ -23,8 +23,6 @@ odoo.define('oepetstore.petstore', function (require) {
         }
     });
 
-    // instead instance.web.client_actions.add('petstore.homepage', 'instance.oepetstore.HomePage');
-    core.action_registry.add('petstore.homepage', homePage);
 
     var MessageOfTheDay = Widget.extend({
         template: "MessageOfTheDay",
@@ -98,6 +96,24 @@ odoo.define('oepetstore.petstore', function (require) {
             }
         }
     });
+    var WidgetCoordinates = form_common.FormWidget.extend({
+    start: function() {
+        this._super();
+        this.field_manager.on("field_changed:provider_latitude", this, this.display_map);
+        this.field_manager.on("field_changed:provider_longitude", this, this.display_map);
+        this.display_map();
+    },
+    display_map: function() {
+        this.$el.html(QWeb.render("WidgetCoordinates", {
+            "latitude": this.field_manager.get_field_value("provider_latitude") || 0,
+            "longitude": this.field_manager.get_field_value("provider_longitude") || 0,
+        }));
+    }
+});
 
+    // instead instance.web.client_actions.add('petstore.homepage', 'instance.oepetstore.HomePage');
+    core.action_registry.add('petstore.homepage', homePage);
+    //instead instance.web.form.custom_widgets.add('coordinates', 'instance.oepetstore.WidgetCoordinates');
+    core.form_custom_registry.add('coordinates', WidgetCoordinates);
     core.form_widget_registry.add('color', FieldColor);
 });

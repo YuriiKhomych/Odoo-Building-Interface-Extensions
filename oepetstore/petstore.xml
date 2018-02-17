@@ -11,7 +11,7 @@
         <menuitem id="main_petstore_menu" name="Pet Store" />
 
         <menuitem id="petstore_menu" name="Pet Store"
-            parent="main_petstore_menu" />
+                  parent="main_petstore_menu" />
 
         <record id="action_home_page" model="ir.actions.client">
             <field name="name">Pet Store Home</field>
@@ -19,7 +19,7 @@
         </record>
 
         <menuitem id="home_page_petstore_menu" name="Home Page" parent="petstore_menu"
-            action="action_home_page"/>
+                  action="action_home_page"/>
 
         <record model="ir.ui.view" id="message_of_the_day_tree">
             <field name="name">message_of_the_day_tree</field>
@@ -55,7 +55,7 @@
         </record>
 
         <menuitem id="message_day" name="Message of the day" parent="petstore_menu"
-            action="message_of_the_day_action"/>
+                  action="message_of_the_day_action"/>
 
         <record model="ir.actions.act_window" id="pet_toys_action">
             <field name="name">Pet Toys</field>
@@ -72,10 +72,24 @@
                 <field name="name" position="after">
                     <field name="max_quantity"/>
                 </field>
+                <xpath expr="//notebook[1]" position="after">
+                    <notebook colspan="4">
+                        <page string="Coordinates">
+                            <group>
+                                <widget type="coordinates">
+                                </widget>
+                            </group>
+                            <group>
+                                <field name="provider_latitude"/>
+                                <field name="provider_longitude"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
             </field>
         </record>
 
         <menuitem id="pet_toys_action_menu" name="Pet Toys" parent="petstore_menu"
-            action="pet_toys_action"/>
+                  action="pet_toys_action"/>
     </data>
 </odoo>
