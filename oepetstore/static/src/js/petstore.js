@@ -97,19 +97,35 @@ odoo.define('oepetstore.petstore', function (require) {
         }
     });
     var WidgetCoordinates = form_common.FormWidget.extend({
-    start: function() {
-        this._super();
-        this.field_manager.on("field_changed:provider_latitude", this, this.display_map);
-        this.field_manager.on("field_changed:provider_longitude", this, this.display_map);
-        this.display_map();
-    },
-    display_map: function() {
-        this.$el.html(QWeb.render("WidgetCoordinates", {
-            "latitude": this.field_manager.get_field_value("provider_latitude") || 0,
-            "longitude": this.field_manager.get_field_value("provider_longitude") || 0,
-        }));
-    }
-});
+        events: {
+            'click button': function () {
+                navigator.geolocation.getCurrentPosition(
+                    this.proxy('received_position'));
+            }
+        },
+        start: function() {
+            var sup = this._super();
+            this.field_manager.on("field_changed:provider_latitude", this, this.display_map);
+            this.field_manager.on("field_changed:provider_longitude", this, this.display_map);
+            this.on("change:effective_readonly", this, this.display_map);
+            this.display_map();
+            return sup;
+        },
+        display_map: function() {
+            this.$el.html(QWeb.render("WidgetCoordinates", {
+                "latitude": this.field_manager.get_field_value("provider_latitude") || 0,
+                "longitude": this.field_manager.get_field_value("provider_longitude") || 0,
+            }));
+            this.$("button").toggle(! this.get("effective_readonly"));
+
+        },
+        received_position: function(obj) {
+            this.field_manager.set_values({
+                "provider_latitude": obj.coords.latitude,
+                "provider_longitude": obj.coords.longitude,
+            });
+        },
+    });
 
     // instead instance.web.client_actions.add('petstore.homepage', 'instance.oepetstore.HomePage');
     core.action_registry.add('petstore.homepage', homePage);
