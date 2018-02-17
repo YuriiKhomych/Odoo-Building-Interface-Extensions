@@ -22,4 +22,15 @@
         <p><img t-attf-src="data:image/jpg;base64,{{item.image}}"/></p>
     </div>
     </t>
+  <t t-name="FieldColor">
+    <div class="oe_field_color">
+        <t t-if="widget.get('effective_readonly')">
+            <div class="oe_field_color_content" />
+        </t>
+        <t t-if="! widget.get('effective_readonly')">
+            <input type="color"></input>
+        </t>
+      <input type="color" />
+    </div>
+  </t>
 </templates>
