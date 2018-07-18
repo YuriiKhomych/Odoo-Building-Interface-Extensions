@@ -13,7 +13,17 @@ odoo.define('oepetstore.petstore', function (require) {
             var products = new ProductsWidget(
                 this, ["cpu", "mouse", "keyboard", "graphic card", "screen"], "#00FF00");
             products.appendTo(this.$el);
-            },
+            var widget = new ConfirmWidget(this);
+            widget.on("user_chose", this, this.user_chose);
+            widget.appendTo(this.$el);
+        },
+        user_chose: function(confirm) {
+            if (confirm) {
+                console.log("The user agreed to continue");
+            } else {
+                console.log("The user refused to continue");
+            }
+        },
     });
 
     var ProductsWidget = Widget.extend({
@@ -22,6 +32,21 @@ odoo.define('oepetstore.petstore', function (require) {
             this._super(parent);
             this.products = products;
             this.color = color;
+        },
+    });
+    var ConfirmWidget = Widget.extend({
+        events: {
+            'click button.ok_button': function () {
+                this.trigger('user_chose', true);
+            },
+            'click button.cancel_button': function () {
+                this.trigger('user_chose', false);
+            }
+        },
+        start: function() {
+            this.$el.append("<div>Are you sure you want to perform this action?</div>" +
+                "<button class='ok_button'>Ok</button>" +
+                "<button class='cancel_button'>Cancel</button>");
         },
     });
     core.action_registry.add('petstore.homepage', homePage);
