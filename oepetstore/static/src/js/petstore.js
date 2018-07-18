@@ -49,6 +49,12 @@ odoo.define('oepetstore.petstore', function (require) {
                 "<button class='cancel_button'>Cancel</button>");
         },
     });
+    homePage.include({
+        user_chose: function(confirm) {
+            this._super();
+            console.log('Redefined');
+        }
+        });
     core.action_registry.add('petstore.homepage', homePage);
 
 });
