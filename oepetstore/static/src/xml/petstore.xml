@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <templates xml:space="preserve">
-  <t t-name="ProductsWidget">
-        <div>
-            <t t-foreach="widget.products" t-as="product">
-                <span class="oe_products_item"
-                      t-attf-style="background-color: {{ widget.color }};">
-                    <t t-esc="product"/>
-                </span>
-                <br/>
-            </t>
+  <t t-name="HomePage">
+        <div class="oe_petstore_homepage">
+        </div>
+    </t>
+    <t t-name="MessageOfTheDay">
+        <div class="oe_petstore_motd">
+            <p class="oe_mywidget_message_of_the_day"></p>
         </div>
     </t>
 </templates>

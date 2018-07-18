@@ -1,7 +1,6 @@
-.oe_products_item {
-    display: inline-block;
-    padding: 3px;
+.oe_petstore_motd {
     margin: 5px;
-    border: 1px solid black;
+    padding: 5px;
     border-radius: 3px;
+    background-color: #F0EEEE;
 }
