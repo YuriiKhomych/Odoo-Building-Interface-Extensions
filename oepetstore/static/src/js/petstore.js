@@ -13,6 +13,7 @@ odoo.define('oepetstore.petstore', function (require) {
         className: 'oe_petstore_homepage',
         init: function(parent) {
             this._super(parent);
+            // this.name = "Mordecai";
             console.log("Hello JS, I'm inside of init.");
         },
         start: function() {
@@ -22,6 +23,7 @@ odoo.define('oepetstore.petstore', function (require) {
             greeting.appendTo(this.$el);
             console.log(this.getChildren()[0].$el);
             // will print "div.oe_petstore_greetings" in the console
+            this.$el.append(QWeb.render("HomePageTemplate", {name: "Klaus"}));
             return greeting.appendTo(this.$el);
         },
     });
