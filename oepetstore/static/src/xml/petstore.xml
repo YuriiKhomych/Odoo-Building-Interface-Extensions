@@ -5,5 +5,6 @@
         <div style="background-color: red;">This is some simple HTML</div>
         <div><t t-esc="3+5"/></div>
         <div><t t-esc="widget.name.toUpperCase()"/></div>
+        <div><t t-raw="widget.name.link(user_account)"/></div>
     </t>
 </templates>
