@@ -1,11 +1,11 @@
 {
-    'name' : 'OpenERP Pet Store',
-    'version': '1.0',
+    'name' : 'Odoo 11 Pet Store',
+    'version': '11.0',
     'summary': 'Sell pet toys',
     'category': 'Tools',
     'description':
         """
-OpenERP Pet Store
+Odoo Pet Store
 =================
 
 A wonderful application to sell pet toys.
