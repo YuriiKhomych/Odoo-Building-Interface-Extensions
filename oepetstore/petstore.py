@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 
+
 class MessageOfTheDay(models.Model):
     _name = "oepetstore.message_of_the_day"
 
